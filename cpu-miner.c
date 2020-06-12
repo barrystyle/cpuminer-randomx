@@ -2350,7 +2350,7 @@ static void *miner_thread(void *userdata)
 			rc = scanhash_pentablake(thr_id, &work, max_nonce, &hashes_done);
 			break;
 		case ALGO_RANDOMX:
-			rc = scanhash_randomx(thr_id, &work, max_nonce, &hashes_done);
+			rc = scanhash_randomx(thr_id, &work, stratum.job.seed, max_nonce, &hashes_done);
 			break;
 		case ALGO_PLUCK:
 			rc = scanhash_pluck(thr_id,  &work, max_nonce, &hashes_done, scratchbuf, opt_pluck_n);
@@ -3649,8 +3649,6 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* start mining threads */
-
-        randomx_init(opt_n_threads);
 
 	for (i = 0; i < opt_n_threads; i++) {
 		thr = &thr_info[i];

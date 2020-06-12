@@ -116,7 +116,6 @@ cpuminer_SOURCES = \
   algo/xevan.c \
   algo/yescrypt.c \
   algo/zr5.c \
-  randomx.cpp \
   RandomX/src/aes_hash.cpp \
   RandomX/src/argon2_ref.c \
   RandomX/src/argon2_ssse3.c \
@@ -142,7 +141,9 @@ cpuminer_SOURCES = \
   RandomX/src/vm_compiled_light.cpp \
   RandomX/src/blake2/blake2b.c \
   RandomX/src/jit_compiler_x86.cpp \
-  RandomX/src/jit_compiler_x86_static.S
+  RandomX/src/jit_compiler_x86_static.S \
+  rxhash/rx-slow-hash.c \
+  randomx.c
 
 
 disable_flags =
@@ -169,7 +170,7 @@ endif
 cpuminer_LDFLAGS	= @LDFLAGS@
 cpuminer_LDADD	= @LIBCURL@ @JANSSON_LIBS@ @PTHREAD_LIBS@ @WS2_LIBS@
 cpuminer_CPPFLAGS = @LIBCURL_CPPFLAGS@ $(ALL_INCLUDES)
-cpuminer_CFLAGS   = -Wno-pointer-sign -Wno-pointer-to-int-cast $(disable_flags)
+cpuminer_CFLAGS   = -Wno-pointer-sign -Wno-pointer-to-int-cast $(disable_flags) -g
 
 if HAVE_WINDOWS
 cpuminer_CFLAGS += -Wl,--stack,10485760

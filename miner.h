@@ -264,6 +264,7 @@ int scanhash_x20r(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *h
 int scanhash_xevan(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_yescrypt(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_zr5(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
+int scanhash_randomx(int thr_id, struct work *work, const char* seedhash, uint32_t max_nonce, uint64_t *hashes_done);
 
 /* api related */
 void *api_thread(void *userdata);
@@ -428,6 +429,7 @@ struct stratum_job {
 	unsigned char extra[64]; // like lbry claimtrie
 	bool clean;
 	double diff;
+        unsigned char seed[32];
 };
 
 struct stratum_ctx {

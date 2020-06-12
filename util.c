@@ -1682,9 +1682,8 @@ static uint32_t getblocheight(struct stratum_ctx *sctx)
 static bool stratum_notify(struct stratum_ctx *sctx, json_t *params)
 {
 	char algo[64] = { 0 };
-	const char *job_id, *prevhash, *coinb1, *coinb2, *version, *nbits, *ntime;
+	const char *job_id, *prevhash, *coinb1, *coinb2, *version, *nbits, *ntime, *seed;
 	const char *extradata = NULL;
-        const char *seed = NULL;
 	size_t coinb1_size, coinb2_size;
 	bool clean, ret = false;
 	int merkle_count, i, p=0;
@@ -1714,7 +1713,15 @@ static bool stratum_notify(struct stratum_ctx *sctx, json_t *params)
 	version = json_string_value(json_array_get(params, p++));
 	nbits = json_string_value(json_array_get(params, p++));
 	ntime = json_string_value(json_array_get(params, p++));
-	clean = json_is_true(json_array_get(params, p));
+        if (has_roots) {
+                seed = json_string_value(json_array_get(params, p++));
+                if (strlen(seed) != 64) {
+                      applog(LOG_ERR, "Stratum notify: invalid seed parameter");
+                      goto out;
+                }
+                hex2bin(sctx->job.seed,seed,32);
+        }
+        clean = json_is_true(json_array_get(params, p));
 
 	if (!job_id || !prevhash || !coinb1 || !coinb2 || !version || !nbits || !ntime ||
 	    strlen(prevhash) != 64 || strlen(version) != 8 ||
