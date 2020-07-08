@@ -142,8 +142,7 @@ cpuminer_SOURCES = \
   RandomX/src/blake2/blake2b.c \
   RandomX/src/jit_compiler_x86.cpp \
   RandomX/src/jit_compiler_x86_static.S \
-  rxhash/rx-slow-hash.c \
-  randomx.c
+  randomx.cpp
 
 
 disable_flags =

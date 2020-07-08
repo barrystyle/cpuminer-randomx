@@ -264,7 +264,13 @@ int scanhash_x20r(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *h
 int scanhash_xevan(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_yescrypt(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
 int scanhash_zr5(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done);
+#ifdef __cplusplus
+extern "C" {
+#endif
 int scanhash_randomx(int thr_id, struct work *work, const char* seedhash, uint32_t max_nonce, uint64_t *hashes_done);
+#ifdef __cplusplus
+}
+#endif
 
 /* api related */
 void *api_thread(void *userdata);
